@@ -40,7 +40,7 @@ async def signup(
     )
 
 
-@router.post("/refresh_tokens", response_model=RefreshTokensUseCase.Response)
+@router.post("/refresh-tokens", response_model=RefreshTokensUseCase.Response)
 async def refresh_tokens(
     entity: RefreshTokensEntity,
     use_case: Annotated[RefreshTokensUseCase, Depends(RefreshTokensUseCase)],
