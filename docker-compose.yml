@@ -1,0 +1,46 @@
+version: '3'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: products
+    networks:
+      - elasticsearch-net
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: pg_isready -d postgres -U postgres
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  api:
+    build:
+      context: app/
+      args:
+        BUILD_MODE: development
+    volumes:
+      - ./app:/app
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - animatica-net
+    env_file:
+      - _envs/local/api.env
+      - _envs/local/db.env
+      - _envs/local/ml.env
+    depends_on:
+      - db
+
+volumes:
+  pg_data:
+
+networks:
+  animatica-net:
+    driver: bridge
