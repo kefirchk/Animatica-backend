@@ -5,11 +5,13 @@ from src.domain.entities.response import (
     ResponseSuccess,
 )
 from src.domain.interfaces import IUseCase
+from src.infrastructure.services.auth import UserAuthInfo
 from starlette.responses import JSONResponse
 
 
 class GenerateVideoByImageUseCase(IUseCase):
     class Request(RequestModel):
+        user: UserAuthInfo | None
         image: bytes
 
     class Response(ResponseModel):

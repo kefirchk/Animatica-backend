@@ -5,12 +5,13 @@ from src.domain.entities.response import (
     ResponseSuccess,
 )
 from src.domain.interfaces import IUseCase
+from src.infrastructure.services.auth import UserAuthInfo
 from starlette.responses import JSONResponse
 
 
 class GenerateRandomVideoUseCase(IUseCase):
     class Request(RequestModel):
-        pass
+        user: UserAuthInfo | None
 
     class Response(ResponseModel):
         pass
