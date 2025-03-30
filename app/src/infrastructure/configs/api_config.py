@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
-from src.domain.entities import APIModeEnum, LogLevelEnum
+from src.domain.entities.enums import APIModeEnum, LogLevelEnum
 
 
 class APIConfig(BaseSettings):

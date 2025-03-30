@@ -3,11 +3,11 @@ from pydantic_settings import BaseSettings
 
 
 class DBConfig(BaseSettings):
-    DB_HOST: str = Field("localhost")
-    DB_PORT: str = Field("5432")
-    DB_NAME: str = Field("animatica")
-    DB_USER: str = Field("postgres")
-    DB_PASSWORD: SecretStr = Field("postgres")
+    DB_HOST: str
+    DB_PORT: str
+    DB_NAME: str
+    DB_USER: str
+    DB_PASSWORD: SecretStr
     DB_DRIVER: str = Field("postgresql+asyncpg")
 
     @property
