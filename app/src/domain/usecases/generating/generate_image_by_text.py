@@ -1,3 +1,4 @@
+from src.domain.entities.auth import UserAuthInfo
 from src.domain.entities.request import RequestModel
 from src.domain.entities.response import (
     ResponseFailure,
@@ -5,7 +6,6 @@ from src.domain.entities.response import (
     ResponseSuccess,
 )
 from src.domain.interfaces import IUseCase
-from src.infrastructure.services.auth import UserAuthInfo
 from starlette.responses import JSONResponse
 
 
@@ -19,6 +19,7 @@ class GenerateImageByTextUseCase(IUseCase):
 
     async def execute(self, request: Request) -> JSONResponse:
         try:
+            raise NotImplemented
             return ResponseSuccess.build(self.Response())
         except Exception as exc:
             return ResponseFailure.build(exc)
