@@ -14,3 +14,14 @@ class LogLevelEnum(StrEnum):
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
+
+
+class SubscriptionTypeEnum(StrEnum):
+    BASIC = "basic"
+    STANDARD = "standard"
+    PREMIUM = "premium"
+
+
+class TokenType(StrEnum):
+    ACCESS = "access"
+    REFRESH = "refresh"

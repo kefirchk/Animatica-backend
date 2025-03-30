@@ -8,13 +8,6 @@ class ResponseModel(BaseModel):
     pass
 
 
-class TokensResponseModel(ResponseModel):
-    refresh_token: str
-    access_token: str
-    expires_in: int
-    refresh_expires_in: int
-
-
 class ResponseFailure:
     def __init__(self, err_msg: str, status_code: int) -> None:
         self.err_msg = err_msg

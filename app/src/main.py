@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 import src
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.domain.entities import LogLevelEnum
+from src.domain.entities.enums import LogLevelEnum
 from src.infrastructure.api import router as api_router
 from src.infrastructure.configs import APIConfig
 from src.infrastructure.exceptions.handlers import (
