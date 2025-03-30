@@ -1,14 +1,16 @@
-from typing import Annotated
-
-from fastapi import Depends
 from src.domain.entities.request import RequestModel
 from src.domain.entities.response import (
     ResponseFailure,
+    ResponseModel,
     ResponseSuccess,
-    TokensResponseModel,
 )
-from src.domain.interfaces import IDBRepository, IUseCase
-from src.infrastructure.repositories import DBRepository
+from src.domain.interfaces import IUseCase
+from src.infrastructure.configs.auth_config import AuthConfig
+from src.infrastructure.exceptions.exceptions import (
+    InvalidCredentialsException,
+)
+from src.infrastructure.services.auth import AuthService
+from src.infrastructure.services.auth.token import TokenService
 from starlette.responses import JSONResponse
 
 
@@ -17,22 +19,34 @@ class UserLoginUseCase(IUseCase):
         username: str
         password: str
 
-    class Response(TokensResponseModel):
-        pass
+    class Response(ResponseModel):
+        token_name: str
+        refresh_token: str
+        access_token: str
+        access_expires_in: int
+        refresh_expires_in: int
 
-    def __init__(self, repository: Annotated[IDBRepository, Depends(DBRepository)]) -> None:
-        self.repository = repository
+    def __init__(self) -> None:
+        self.auth_service = AuthService()
+        self.token_service = TokenService()
+        self.auth_config = AuthConfig()
 
     async def execute(self, request: Request) -> JSONResponse:
         try:
-            response = await self.repository.login(request.username, request.password)
+            user = await self.auth_service.authenticate_user(request.username, request.password)
+            if not user:
+                raise InvalidCredentialsException("Invalid username or password")
+
+            token_data = await self.token_service.generate_tokens(user.username)
+
             return ResponseSuccess.build(
                 self.Response(
-                    refresh_token=response["refresh_token"],
-                    access_token=response["access_token"],
-                    expires_in=response["expires_in"],
-                    refresh_expires_in=response["refresh_expires_in"],
-                ),
+                    token_type="Bearer",
+                    access_token=token_data["access_token"],
+                    refresh_token=token_data["refresh_token"],
+                    access_expires_in=token_data["access_expires_in"],
+                    refresh_expires_in=token_data["refresh_expires_in"],
+                )
             )
         except Exception as exc:
             return ResponseFailure.build(exc)
