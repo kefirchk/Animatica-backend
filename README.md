@@ -17,7 +17,7 @@ image-to-video conversion, and post-processing.
 
 ## Requirements⚠️
 
-- Python 3.8+
+- Python 3.11
 - PyTorch
 - Docker (for deployment through containers)
 
@@ -45,26 +45,20 @@ source venv/Scripts/activate
 **Step 2.**
 
 ```bash
+cd app
 pip install -r requirements.txt
 ```
 
 **Step 3.**
 
 ```bash
-streamlit run main.py
+uvicorn src.main:app --host 0.0.0.0 --port 80
 ```
 
 
 ## Deploying via Docker
 
 Below are the basic commands to manage docker.
-
-###### Image creating
-
-```bash
-docker build . --tag animatica
-docker run -p 8080:8080 animatica
-```
 
 ###### Docker-compose
 
