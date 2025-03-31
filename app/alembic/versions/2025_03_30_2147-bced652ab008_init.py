@@ -31,7 +31,11 @@ def upgrade() -> None:
     op.create_table(
         "subscription_type",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
-        sa.Column("name", sa.Enum("BASIC", "STANDARD", "PREMIUM", name="subscriptiontypeenum"), nullable=False),
+        sa.Column(
+            "name",
+            sa.Enum("BASIC", "STANDARD", "PREMIUM", "TRIAL", "EXPIRED", name="subscriptiontypeenum"),
+            nullable=False,
+        ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("name"),
     )
