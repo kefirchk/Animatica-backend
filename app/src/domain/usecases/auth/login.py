@@ -41,7 +41,7 @@ class UserLoginUseCase(IUseCase):
 
             return ResponseSuccess.build(
                 self.Response(
-                    token_type="Bearer",
+                    token_name="Bearer",
                     access_token=token_data["access_token"],
                     refresh_token=token_data["refresh_token"],
                     access_expires_in=token_data["access_expires_in"],
