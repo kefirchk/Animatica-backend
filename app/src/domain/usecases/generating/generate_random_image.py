@@ -18,7 +18,7 @@ class GenerateRandomImageUseCase(IUseCase):
 
     async def execute(self, request: Request) -> JSONResponse:
         try:
-            raise NotImplemented
+            raise NotImplementedError("Use case is not implemented")
             return ResponseSuccess.build(self.Response())
         except Exception as exc:
             return ResponseFailure.build(exc)
