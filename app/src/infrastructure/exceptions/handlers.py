@@ -12,6 +12,7 @@ log = logging.getLogger(__name__)
 
 
 exception_handlers: dict[type[Exception], callable] = {
+    SubscriptionTypeNotFound: lambda x: (status.HTTP_404_NOT_FOUND, "Not found"),
     ExpiredTokenException: lambda x: (status.HTTP_401_UNAUTHORIZED, "Expired token"),
     InvalidCredentialsException: lambda x: (status.HTTP_401_UNAUTHORIZED, "Invalid credentials"),
     InvalidTokenException: lambda x: (status.HTTP_401_UNAUTHORIZED, "Invalid token"),

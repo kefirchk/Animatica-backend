@@ -17,9 +17,16 @@ class LogLevelEnum(StrEnum):
 
 
 class SubscriptionTypeEnum(StrEnum):
+    TRIAL = "trial"
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
+
+
+class SuggestedSubscriptionTypeEnum(StrEnum):
+    BASIC = SubscriptionTypeEnum.BASIC
+    STANDARD = SubscriptionTypeEnum.STANDARD
+    PREMIUM = SubscriptionTypeEnum.PREMIUM
 
 
 class TokenType(StrEnum):
