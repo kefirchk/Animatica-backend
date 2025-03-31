@@ -1,2 +1,2 @@
-from .db_repository import DBRepository
+from .subscription_repository import SubscriptionRepository
 from .user_repository import UserRepository
