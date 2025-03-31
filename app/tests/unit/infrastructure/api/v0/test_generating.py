@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 from fastapi import UploadFile
+from src.domain.entities.auth import UserAuthInfo
 from src.domain.usecases.generating import (
     GenerateImageByTextUseCase,
     GenerateRandomImageUseCase,
@@ -10,7 +11,6 @@ from src.domain.usecases.generating import (
     GenerateVideoByImageUseCase,
     GenerateVideoByTextUseCase,
 )
-from src.infrastructure.services.auth import UserAuthInfo
 
 
 class TestAPIGenerating:
@@ -51,9 +51,8 @@ class TestAPIGenerating:
         )
         image_file = UploadFile(filename="test_image.png", file=io.BytesIO(b"fake image data"))
 
-        response = await api_client.request(
-            method="GET",
-            url="/api/v0/generating/image-to-video",
+        response = await api_client.post(
+            "/api/v0/generating/image-to-video",
             files={"image": (image_file.filename, image_file.file, "image/png")},
             headers={"Authorization": "Bearer mocked_token"},
         )

@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 
 class DBConfig(BaseSettings):
-    DB_HOST: str = Field("localhost")
+    DB_HOST: str = Field("db")
     DB_PORT: str = Field("5432")
     DB_NAME: str = Field("animatica")
     DB_USER: str = Field("postgres")

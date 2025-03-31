@@ -1,50 +1,36 @@
-from typing import Annotated
-
-from fastapi import Depends
 from src.domain.entities.request import RequestModel
-from src.domain.entities.response import ResponseFailure, ResponseModel
-from src.domain.interfaces import IDBRepository, IUseCase
-from src.infrastructure.exceptions.exceptions import UserExistsException
-from src.infrastructure.repositories import DBRepository
+from src.domain.entities.response import (
+    ResponseFailure,
+    ResponseModel,
+    ResponseSuccess,
+)
+from src.domain.interfaces import IUseCase
+from src.infrastructure.exceptions.exceptions import UserAlreadyExistsException
+from src.infrastructure.repositories.user_repository import UserRepository
+from starlette import status
 from starlette.responses import JSONResponse
 
 
 class UserSignUpUseCase(IUseCase):
     class Request(RequestModel):
-        email: str
         password: str
-        name: str
+        username: str
 
     class Response(ResponseModel):
-        access_token: str
-        refresh_token: str
+        pass
 
-    def __init__(
-        self,
-        db_repository: Annotated[IDBRepository, Depends(DBRepository)],
-    ) -> None:
-        self.db_repository = db_repository
+    def __init__(self) -> None:
+        self.user_repository = UserRepository()
 
     async def execute(self, request: Request) -> JSONResponse:
         try:
-            await self.email_sender.check_email_verified([request.email])
+            async with self.user_repository as repository:
+                if await repository.get_user_by_username(request.username):
+                    raise UserAlreadyExistsException(f"Username '{request.username}' already exists")
 
-            async with self.db_repository:
-                if await self.db_repository.get_user_by_email(request.email):
-                    raise UserExistsException()
+                await repository.create_user(username=request.username, password=request.password)
 
-                sub = await self.repository.sign_up(
-                    request.email,
-                    request.password,
-                    request.name,
-                )
-
-                await self.db_repository.create_user(
-                    sub,
-                    request.name,
-                    request.email,
-                    request.password,
-                )
+            return ResponseSuccess.build(self.Response(), status=status.HTTP_201_CREATED)
 
         except Exception as exc:
             return ResponseFailure.build(exc)
