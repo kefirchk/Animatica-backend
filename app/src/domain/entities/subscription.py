@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel, Field
 from src.domain.entities.enums import SuggestedSubscriptionTypeEnum
 
@@ -17,6 +15,7 @@ class SuggestedSubscription(BaseModel):
     duration_days: int | None = Field(gt=0)
     features: list[str]
     pricing: SubscriptionPricing
+    stripe_link: str | None
 
 
 class UserSubscription(BaseModel):

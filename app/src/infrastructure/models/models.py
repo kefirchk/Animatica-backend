@@ -31,6 +31,7 @@ class SubscriptionType(Base):
     currency: Mapped[str] = mapped_column(String(3), nullable=False)
     total_credits: Mapped[int | None] = mapped_column(Integer, nullable=True)
     duration_days: Mapped[int | None] = mapped_column(Integer, nullable=True, comment="Duration in days")
+    stripe_link: Mapped[str | None] = mapped_column(String, unique=True, nullable=True)
 
     features: Mapped[list["SubscriptionTypeFeatures"]] = relationship(
         "SubscriptionTypeFeatures", back_populates="subscription_type", lazy="select"

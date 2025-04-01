@@ -40,6 +40,7 @@ class GetSuggestedSubscriptionsUseCase(IUseCase):
                         ),
                         total_credits=s.total_credits,
                         duration_days=s.duration_days,
+                        stripe_link=s.stripe_link,
                     )
                     for s in subscriptions_data
                 ]
