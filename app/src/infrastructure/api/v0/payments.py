@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import Depends, Query
+from fastapi import Body, Depends, Query
 from src.domain.entities.auth import UserAuthInfo
 from src.domain.usecases.payments import (
     CreateCheckoutSessionUseCase,
@@ -35,7 +35,7 @@ async def create_checkout_session(
 async def create_payment(
     use_case: Annotated[CreatePaymentUseCase, Depends(CreatePaymentUseCase)],
     user: Annotated[UserAuthInfo, Depends(JWTBearer(auto_error=True))],
-    session_id: str = Query(..., description="Session ID of Stripe checkout session"),
-    product_id: str = Query(..., description="Payment Stripe Product ID"),
+    session_id: str = Body(..., description="Session ID of Stripe checkout session"),
+    product_id: str = Body(..., description="Payment Stripe Product ID"),
 ):
     return await use_case.execute(use_case.Request(user=user, session_id=session_id, product_id=product_id))
