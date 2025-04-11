@@ -31,7 +31,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(SessionMiddleware, secret_key=APIConfig().session_secret_key)
+app.add_middleware(SessionMiddleware, secret_key=APIConfig().SESSION_SECRET_KEY)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

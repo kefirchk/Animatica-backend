@@ -5,7 +5,7 @@ from src.domain.entities.response import (
     ResponseModel,
     ResponseSuccess,
 )
-from src.domain.entities.subscription import UserSubscription
+from src.domain.entities.subscription import Subscription
 from src.domain.interfaces import IUseCase
 from src.infrastructure.repositories import (
     SubscriptionRepository,
@@ -19,7 +19,7 @@ class GetCurrentSubscriptionUseCase(IUseCase):
         user: UserAuthInfo
 
     class Response(ResponseModel):
-        user_subscription: UserSubscription | None
+        subscription: Subscription | None
 
     def __init__(self):
         self.user_repository = UserRepository()
@@ -31,19 +31,16 @@ class GetCurrentSubscriptionUseCase(IUseCase):
                 user = await repository.get_user_by_username(username=request.user.sub_id)
                 user_id = user.id
 
-            user_subscription = None
+            subscription = None
             async with self.subscription_repository as repository:
-                current_subscription = await repository.get_one_for_user(user_id=user_id)
+                current_subscription = await repository.get_one_by_user_id(user_id=user_id)
                 if current_subscription:
-                    user_subscription = UserSubscription(
-                        user_subscription_id=current_subscription.id,
-                        subscription_type_id=current_subscription.subscription_type_id,
-                        remaining_credits=current_subscription.remaining_credits,
-                        expired_at=(
-                            current_subscription.expired_at.isoformat() if current_subscription.expired_at else None
-                        ),
+                    subscription = Subscription(
+                        subscription_id=current_subscription.id,
+                        user_id=current_subscription.id,
+                        remaining_queries=current_subscription.remaining_queries,
                     )
 
-            return ResponseSuccess.build(self.Response(user_subscription=user_subscription))
+            return ResponseSuccess.build(self.Response(subscription=subscription))
         except Exception as exc:
             return ResponseFailure.build(exc)

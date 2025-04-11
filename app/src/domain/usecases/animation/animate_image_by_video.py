@@ -9,10 +9,9 @@ from src.domain.interfaces import IUseCase
 from starlette.responses import JSONResponse
 
 
-class GenerateVideoByImageUseCase(IUseCase):
+class AnimateImageByVideoUseCase(IUseCase):
     class Request(RequestModel):
         user: UserAuthInfo | None
-        image: bytes
 
     class Response(ResponseModel):
         pass

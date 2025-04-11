@@ -1,10 +1,7 @@
 import os
-from unittest.mock import AsyncMock
 
-import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
-from pytest_mock import mocker
 from src.main import app
 
 TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "test_data")

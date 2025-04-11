@@ -1,2 +1,0 @@
-class TestRefreshTokensUseCase:
-    pass

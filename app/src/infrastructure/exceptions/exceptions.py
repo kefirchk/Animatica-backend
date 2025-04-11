@@ -31,7 +31,9 @@ class NotFoundException(Exception):
         super().__init__(message)
 
 
-class SubscriptionTypeNotFound(NotFoundException):
-    """Raised when subscription type is not found"""
+class StripeException(Exception):
+    """Base exception for Stripe product related errors."""
 
-    entity_name = "Subscription type"
+
+class StripePaymentException(StripeException):
+    """Raised when there are issues with payment processing."""

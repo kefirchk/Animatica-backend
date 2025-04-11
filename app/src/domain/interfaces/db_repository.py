@@ -6,7 +6,7 @@ from sqlalchemy.orm.session import sessionmaker
 from src.infrastructure.configs import DBConfig
 
 engine = create_async_engine(
-    DBConfig().DB_CONN_URL,
+    DBConfig().db_conn_url,
     pool_size=10,
     max_overflow=20,
 )
