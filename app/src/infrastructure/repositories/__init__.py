@@ -1,2 +1,3 @@
+from .stripe_repository import StripeRepository
 from .subscription_repository import SubscriptionRepository
 from .user_repository import UserRepository
