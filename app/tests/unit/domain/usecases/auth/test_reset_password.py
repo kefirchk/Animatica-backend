@@ -1,2 +1,0 @@
-class TestResetPasswordUseCase:
-    pass
