@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from src.domain.interfaces import IDBRepository
 from src.infrastructure.models.models import User
-from src.infrastructure.services.security import PasswordService
+from src.infrastructure.services.security.password import PasswordService
 
 
 class UserRepository(IDBRepository):

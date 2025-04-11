@@ -7,7 +7,7 @@ from src.domain.usecases.subscriptions import (
     GetLimitedSubscriptionsUseCase,
 )
 from src.infrastructure.api import APIRouter
-from src.infrastructure.services.security import JWTBearer
+from src.infrastructure.services.security.jwt_bearer import JWTBearer
 
 router = APIRouter()
 
