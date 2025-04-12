@@ -19,4 +19,4 @@ class Subscription(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
-    remaining_queries: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    remaining_queries: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
