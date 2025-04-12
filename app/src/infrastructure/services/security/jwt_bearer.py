@@ -1,8 +1,9 @@
 import jwt
-from fastapi import HTTPException, Request, status
+from fastapi import Request, status
 from fastapi.security import HTTPBearer
 from src.domain.entities.auth import UserAuthInfo
 from src.infrastructure.configs import AuthConfig
+from src.infrastructure.exceptions.exceptions import ExpiredTokenException
 from src.infrastructure.services.auth.token import TokenService
 
 
@@ -22,9 +23,5 @@ class JWTBearer(HTTPBearer):
             return UserAuthInfo(sub_id=payload["sub"])
         except jwt.PyJWTError:
             if self.auto_error:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Invalid or expired token",
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
+                raise ExpiredTokenException("Invalid or expired token", status.HTTP_401_UNAUTHORIZED)
             return None
