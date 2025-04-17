@@ -17,18 +17,12 @@ logging.basicConfig(format="[PID:%(process)d] %(pathname)s:%(lineno)d %(message)
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    yield
-
-
 app = FastAPI(
-    title=f"{APIConfig().MODE.capitalize()} Animatica API",
+    title=f"{APIConfig().MODE.capitalize()} Animatica Backend API",
     description="This API is designed for the Animatica application.",
     swagger_ui_parameters={"displayRequestDuration": True},
     version=src.__version__,
     debug=(APIConfig().LOG_LEVEL == LogLevelEnum.DEBUG),
-    lifespan=lifespan,
 )
 
 app.add_middleware(SessionMiddleware, secret_key=APIConfig().SESSION_SECRET_KEY)
