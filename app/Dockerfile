@@ -2,12 +2,19 @@ FROM python:3.12-slim
 
 ENV PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY requirements.txt /tmp/requirements.txt
 RUN python -m pip install --upgrade --no-cache-dir -r /tmp/requirements.txt
 
 COPY . /app
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ARG VERSION=0.0.0
 
