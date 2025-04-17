@@ -1,2 +1,1 @@
 from .animate_image_by_video import AnimateImageByVideoUseCase
-from .animate_image_in_real_time import AnimateImageInRealTimeUseCase
