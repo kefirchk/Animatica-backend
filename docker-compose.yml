@@ -35,10 +35,23 @@ services:
       - env/api.env
       - env/auth.env
       - env/db.env
-      - env/ml.env
+      - env/ml_engine.env
       - env/stripe.env
     depends_on:
       - db
+      - ml-engine
+    command: ["/entrypoint.sh"]
+
+  ml-engine:
+    container_name: ml-engine
+    image: kefirchk/animatica-ml-engine:latest
+    ports:
+      - "9080:90"
+    networks:
+      - animatica-net
+    restart: always
+    env_file:
+      - env/ml_engine.env
 
 volumes:
   pg_data:
