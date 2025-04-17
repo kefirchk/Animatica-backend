@@ -37,3 +37,7 @@ class StripeException(Exception):
 
 class StripePaymentException(StripeException):
     """Raised when there are issues with payment processing."""
+
+
+class MLEngineException(Exception):
+    """Base exception for all errors related to ML Engine"""

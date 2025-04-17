@@ -12,6 +12,7 @@ log = logging.getLogger(__name__)
 
 
 exception_handlers: dict[type[Exception], callable] = {
+    MLEngineException: lambda x: (status.HTTP_500_INTERNAL_SERVER_ERROR, "ML Engine error"),
     StripeException: lambda x: (status.HTTP_400_BAD_REQUEST, "Stripe error"),
     StripePaymentException: lambda x: (status.HTTP_402_PAYMENT_REQUIRED, "Payment not completed or failed"),
     ExpiredTokenException: lambda x: (status.HTTP_401_UNAUTHORIZED, "Expired token"),
