@@ -9,6 +9,9 @@ on:
 
 jobs:
   test:
+    env:
+      PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
