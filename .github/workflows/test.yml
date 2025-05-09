@@ -9,7 +9,6 @@ on:
 
 jobs:
   test:
-    environment: ci.env
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,6 +26,26 @@ jobs:
 
       - name: Run tests
         env:
+          API_BASE_URL:  ${{ secrets.API_BASE_URL }}
+          API_MODE: ${{ secrets.API_MODE }}
+          LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
+          FRONTEND_BASE_URL: ${{ secrets.FRONTEND_BASE_URL }}
+          SESSION_SECRET_KEY: ${{ secrets.SESSION_SECRET_KEY }}
+          LOCALHOST_CLIENT_ORIGIN: ${{ secrets.LOCALHOST_CLIENT_ORIGIN }}
+          ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALGORITHM: ${{ secrets.ALGORITHM }}
+          ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+          REFRESH_TOKEN_EXPIRE_DAYS: ${{ secrets.REFRESH_TOKEN_EXPIRE_DAYS }}
+          TOKEN_ISSUER: ${{ secrets.TOKEN_ISSUER }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          ML_ENGINE_BASE_URL: ${{ secrets.ML_ENGINE_BASE_URL }}
+          ML_ENGINE_KEY: ${{ secrets.ML_ENGINE_KEY }}
+          ML_ENGINE_KEY_HEADER: ${{ secrets.ML_ENGINE_KEY_HEADER }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
         run: |
