@@ -26,5 +26,8 @@ jobs:
           pip install -r app/requirements.txt
 
       - name: Run tests
+        env:
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
         run: |
           pytest app/tests/unit
