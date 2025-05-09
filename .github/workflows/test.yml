@@ -9,9 +9,7 @@ on:
 
 jobs:
   test:
-    env:
-      PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    environment: ci.env
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
