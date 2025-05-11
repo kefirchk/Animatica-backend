@@ -1,4 +1,4 @@
-from src.infrastructure.api.utils import APIRouter
+from src.infrastructure.api import APIRouter
 
 from .animation import router as animation_router
 from .auth import router as auth_router
