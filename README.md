@@ -89,6 +89,9 @@ uvicorn src.main:app --host 0.0.0.0 --port 80
 Available endpoints:
 - http://localhost:8080/docs (Swagger docs).
 
+## System Design
+
+![system design](docs/animatica-backed-design-diagram.png)
 
 ## Deploying via Docker
 
